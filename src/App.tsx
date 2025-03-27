@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
+import { Stars } from "@react-three/drei";
+import { Earth, CameraManager, Station } from "@/components";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const orbitRef = useRef<THREE.Object3D | null>(null);
+  const speed = (2 * Math.PI) / (92 * 60); // ISS completes orbit in 92 min
+  const radius = 8 * 1.05; // ISS is ~420 km above Earth (~1.05 Earth radius)
+  const inclination = (51.6 * Math.PI) / 180; // Convert degrees to radians
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Canvas
+      camera={{ position: [5, 5, 5] }}
+      scene={{ background: new THREE.Color("black") }}
+      style={{
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      {/* Ambient Light */}
+      <ambientLight intensity={0.1} />
+      <directionalLight position={[5, 5, 5]} intensity={2} />
+
+      {/* Ambient Star */}
+      <Stars
+        radius={300}
+        depth={50}
+        count={5000}
+        factor={5}
+        saturation={0}
+        fade
+      />
+
+      {/* Earth */}
+      <Earth />
+
+      {/* Station */}
+      <Station
+        orbitRef={orbitRef}
+        speed={speed}
+        radius={radius}
+        inclination={inclination}
+      />
+
+      {/* Camera */}
+      <CameraManager
+        orbitRef={orbitRef}
+        speed={speed}
+        radius={radius}
+        inclination={inclination}
+      />
+    </Canvas>
+  );
 }
 
-export default App
+export default App;
