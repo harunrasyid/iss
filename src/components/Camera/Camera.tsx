@@ -1,22 +1,22 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { ICameraProps } from "./Camera.props";
-import { WebGLRenderer, Camera, Vector3 } from "three";
-import { useState } from "react";
 import { OrbitControls } from "@react-three/drei";
+import { WebGLRenderer, Camera, Vector3 } from "three";
+import { ICameraProps } from "./Camera.props";
 
 export const CameraManager = ({
   orbitRef,
   speed,
   radius,
   inclination,
+  isUserControlled,
+  setUserControlled,
 }: ICameraProps) => {
   const { camera, gl } = useThree<{
     camera: Camera;
     gl: WebGLRenderer;
   }>();
-  const [isUserControlled, setIsUserControlled] = useState(false);
 
-  const handleControlStart = () => setIsUserControlled(true);
+  const handleControlStart = () => setUserControlled(true);
 
   useFrame(({ clock }) => {
     if (!orbitRef.current || isUserControlled) return;

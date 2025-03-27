@@ -5,4 +5,6 @@ export interface ICameraProps {
   speed: number;
   radius: number;
   inclination: number;
+  isUserControlled: boolean;
+  setUserControlled: (value: boolean) => void;
 }

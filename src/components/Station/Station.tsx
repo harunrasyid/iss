@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
-import { IStationProps } from "./Station.props.ts";
-import { useFrame } from "@react-three/fiber";
 import { Vector3, Matrix4, Quaternion } from "three";
+import { useFrame } from "@react-three/fiber";
+import { IStationProps } from "./Station.props.ts";
 
 export const Station = ({
   orbitRef,
