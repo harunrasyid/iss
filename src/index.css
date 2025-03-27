@@ -54,6 +54,55 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.re-focus-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2em;
+  margin-right: 2em;
+  z-index: 1;
+  background-color: white;
+  border-radius: 100%;
+  width: 4em;
+  height: 4em;
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.re-focus-button:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+/* Tooltip styling */
+.re-focus-button::after {
+  content: "Re-Center On ISS"; /* Change this to your desired text */
+  position: absolute;
+  bottom: 120%; /* Adjust to position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.5em;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+/* Show tooltip on hover */
+.re-focus-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.re-focus-button-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
