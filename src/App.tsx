@@ -1,6 +1,7 @@
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
-import { Stars } from "@react-three/drei";
+import { Stars, Loader } from "@react-three/drei";
 import { Earth, CameraManager, Station } from "@/components";
 import { useCameraControl, useOrbit } from "@/hooks";
 import { STARS } from "@/constants";
@@ -21,6 +22,10 @@ function App() {
       >
         <img src={images.icon} className={"re-focus-button-icon"} alt={"iss"} />
       </button>
+
+      {/* Loader */}
+      <Loader />
+
       <Canvas
         camera={{ position: [5, 5, 5] }}
         scene={{ background: new THREE.Color("black") }}
@@ -29,21 +34,23 @@ function App() {
           height: "100vh",
         }}
       >
-        {/* Ambient Light */}
-        <ambientLight intensity={0.1} />
-        <directionalLight position={[5, 5, 5]} intensity={2} />
+        <Suspense fallback={null}>
+          {/* Ambient Light */}
+          <ambientLight intensity={0.1} />
+          <directionalLight position={[5, 5, 5]} intensity={2} />
 
-        {/* Ambient Star */}
-        <Stars {...STARS} />
+          {/* Ambient Star */}
+          <Stars {...STARS} />
 
-        {/* Earth */}
-        <Earth />
+          {/* Earth */}
+          <Earth />
 
-        {/* Station */}
-        <Station {...orbitData} />
+          {/* Station */}
+          <Station {...orbitData} />
 
-        {/* Camera */}
-        <CameraManager {...orbitData} {...cameraControl} />
+          {/* Camera */}
+          <CameraManager {...orbitData} {...cameraControl} />
+        </Suspense>
       </Canvas>
     </div>
   );
