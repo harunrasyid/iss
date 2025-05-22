@@ -1,4 +1,6 @@
-import { useGLTF } from "@react-three/drei";
+import { useMemo } from "react";
+import * as THREE from "three";
+import { useGLTF, Line } from "@react-three/drei";
 import { Vector3, Matrix4, Quaternion } from "three";
 import { useFrame } from "@react-three/fiber";
 import { IStationProps } from "./Station.props.ts";
@@ -10,6 +12,21 @@ export const Station = ({
   inclination,
 }: IStationProps) => {
   const { scene } = useGLTF("/station.glb");
+
+  const orbitPoints = useMemo(() => {
+    const points: THREE.Vector3[] = [];
+    const segments = 360;
+
+    for (let i = 0; i <= segments; i++) {
+      const t = (i / segments) * Math.PI * 2;
+      const x = radius * Math.cos(t);
+      const y = radius * Math.sin(t) * Math.sin(inclination);
+      const z = radius * Math.sin(t) * Math.cos(inclination);
+      points.push(new THREE.Vector3(x, y, z));
+    }
+
+    return points;
+  }, [radius, inclination]);
 
   useFrame(({ clock }) => {
     if (orbitRef.current) {
@@ -37,7 +54,7 @@ export const Station = ({
       // Create rotation quaternion (avoids scale issues)
       const quaternion = new Quaternion();
       quaternion.setFromRotationMatrix(
-        new Matrix4().makeBasis(right, correctedUp, velocity),
+        new Matrix4().makeBasis(right, correctedUp, velocity)
       );
 
       // Apply transformations
@@ -47,8 +64,13 @@ export const Station = ({
   });
 
   return (
-    <group ref={orbitRef} scale={[0.001, 0.001, 0.001]}>
-      <primitive object={scene} />
-    </group>
+    <>
+      <group ref={orbitRef} scale={[0.001, 0.001, 0.001]}>
+        <primitive object={scene} />
+      </group>
+
+      {/* Orbit path */}
+      <Line points={orbitPoints} color="yellow" lineWidth={1} dashed={false} />
+    </>
   );
 };
