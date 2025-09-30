@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/utils/axios";
-import { IPositionResponse } from "@/types/iss.type";
+import { PositionResponseType } from "@/types/iss.type";
 
 export function useData() {
-  const { data, isLoading } = useQuery<IPositionResponse>({
+  const { data, isLoading } = useQuery<PositionResponseType>({
     queryKey: ["states-all"],
     queryFn: async () => {
       const res = await axiosInstance.get(``);

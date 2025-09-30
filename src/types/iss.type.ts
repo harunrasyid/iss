@@ -1,10 +1,14 @@
-export interface IPositionResponse {
-  iss_position: {
-    latitude: string;
-    longitude: string;
-  };
-  timestamp: 1759113638;
-}
+import { z } from "zod";
+
+export const PositionResponseSchema = z.object({
+  iss_position: z.object({
+    latitude: z.string(),
+    longitude: z.string(),
+  }),
+  timestamp: z.number(),
+});
+
+export type PositionResponseType = z.infer<typeof PositionResponseSchema>;
 
 export interface IPosition {
   lng: number;

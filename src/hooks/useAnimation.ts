@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { IPosition, IPositionResponse } from "@/types/iss.type";
+import { IPosition, PositionResponseType } from "@/types/iss.type";
 
 // Linear interpolation between two values
 const lerp = (start: number, end: number, t: number) => {
@@ -11,7 +11,7 @@ const easeInOutCubic = (t: number) => {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 };
 
-export function useAnimation(data: IPositionResponse | undefined) {
+export function useAnimation(data: PositionResponseType | undefined) {
   const prevPosRef = useRef<IPosition | null>(null);
   const lastPosRef = useRef<IPosition | null>(null);
   const [interpolatedPos, setInterpolatedPos] = useState<
