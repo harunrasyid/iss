@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 
+const TILE_URL = import.meta.env.VITE_TILE_URL;
+
 export function useMap() {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -12,8 +14,7 @@ export function useMap() {
 
     const map = new maplibregl.Map({
       container: mapContainer.current,
-      style:
-        "https://api.maptiler.com/maps/satellite/style.json?key=ylI2IqPKBbIrZUyE0I4r",
+      style: TILE_URL,
       center: [0, 0],
       zoom: 6,
       maplibreLogo: false,

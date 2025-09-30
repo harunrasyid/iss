@@ -5,7 +5,7 @@ import { useAnimation } from "@/hooks/useAnimation";
 import { useData } from "@/hooks/useData";
 import { images } from "@/assets";
 
-const MODEL_URL = "/station.glb";
+const MODEL_URL = "/station-compressed.glb";
 
 export const Map = () => {
   const { mapContainer, mapRef, overlayRef } = useMap();
