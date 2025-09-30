@@ -8,8 +8,6 @@ export function useData() {
     queryFn: async () => {
       const res = await axiosInstance.get(``);
 
-      console.log(res);
-
       return res.data;
     },
     refetchOnWindowFocus: false,
