@@ -65,7 +65,9 @@ button:focus-visible {
   border-radius: 100%;
   width: 4em;
   height: 4em;
-  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+  transition:
+    box-shadow 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
 }
 
 .re-focus-button:hover {
@@ -88,7 +90,9 @@ button:focus-visible {
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  transition:
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out;
 }
 
 /* Show tooltip on hover */

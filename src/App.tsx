@@ -1,57 +1,18 @@
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import * as THREE from "three";
-import { Stars, Loader } from "@react-three/drei";
-import { Earth, CameraManager, Station } from "@/components";
-import { useCameraControl, useOrbit } from "@/hooks";
-import { STARS } from "@/constants";
-import { images } from "@/assets";
+import { Map } from "./components/Map";
 
 function App() {
-  // Handle orbit movement
-  const orbitData = useOrbit();
-
-  // Handle camera control
-  const cameraControl = useCameraControl();
-
   return (
-    <div>
-      <button
-        className={"re-focus-button"}
-        onClick={() => cameraControl.setUserControlled(false)}
-      >
-        <img src={images.icon} className={"re-focus-button-icon"} alt={"iss"} />
-      </button>
-
-      {/* Loader */}
-      <Loader />
-
-      <Canvas
-        camera={{ position: [5, 5, 5] }}
-        scene={{ background: new THREE.Color("black") }}
-        style={{
-          width: "100vw",
-          height: "100vh",
-        }}
-      >
-        <Suspense fallback={null}>
-          {/* Ambient Light */}
-          <ambientLight intensity={0.1} />
-          <directionalLight position={[5, 5, 5]} intensity={2} />
-
-          {/* Ambient Star */}
-          <Stars {...STARS} />
-
-          {/* Earth */}
-          <Earth />
-
-          {/* Station */}
-          <Station {...orbitData} />
-
-          {/* Camera */}
-          <CameraManager {...orbitData} {...cameraControl} />
-        </Suspense>
-      </Canvas>
+    <div
+      style={{
+        display: "flex",
+        overflow: "hidden",
+        height: "100vh",
+        maxWidth: "100vw",
+        width: "100vw",
+        backgroundColor: "black",
+      }}
+    >
+      <Map />
     </div>
   );
 }
